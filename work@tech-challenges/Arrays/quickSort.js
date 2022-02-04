@@ -3,42 +3,23 @@ function quickSort(array) {
   return array;
 }
 
-function quickSortHelper(array, startIndex, endIndex) {
-  if (startIndex >= endIndex) return;
-  let pivotIndex = startIndex;
-  let leftIndex = startIndex + 1;
-  let rightIndex = endIndex;
-  while (rightIndex >= leftIndex) {
-    if (
-      array[leftIndex] > array[pivotIndex] &&
-      array[rightIndex] < array[pivotIndex]
-    ) {
-      [array[leftIndex], array[rightIndex]] = [
-        array[rightIndex],
-        array[leftIndex],
-      ];
-    }
-    if (array[leftIndex] <= array[pivotIndex]) {
-      leftIndex += 1;
-    }
-    if (array[rightIndex] >= array[pivotIndex]) {
-      rightIndex -= 1;
-    }
+function quickSort(arr, startIndex, endIndex) {
+  if (arr.length <= 1) return arr;
 
-    [array[rightIndex], array[pivotIndex]] = [
-      array[pivotIndex],
-      array[rightIndex],
-    ];
-    leftSubArrayIsSmaller =
-      rightIndex - 1 - startIndex < endIndex - (rightIndex + 1);
-    if (leftSubArrayIsSmaller) {
-      quickSortHelper(array, startIndex, rightIndex - 1);
-      quickSortHelper(array, rightIndex + 1, endIndex);
+  var swapPosition = Math.floor((arr.length - 1) / 2);
+  var pivot = arr.splice(swapPosition, 1);
+  var left = [];
+  var right = [];
+
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] < pivot) {
+      left.push(arr[i]);
     } else {
-      quickSortHelper(array, rightIndex + 1, endIndex);
-      quickSortHelper(array, startIndex, rightIndex - 1);
+      right.push(arr[i]);
     }
   }
+
+  return quickSort(left).concat(pivot, quickSort(right));
 }
 
-console.log(quickSort([1, 2, 5, 3, 15, 12]));
+console.log(quickSort([1, 2, 5, 5, 5, 5, 5, 5, 3, 15, 12, 5]));
